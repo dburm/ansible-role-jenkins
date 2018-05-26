@@ -1,0 +1,16 @@
+---
+sudo: required
+language: python
+services: docker
+
+python:
+  - "2.7"
+before_install:
+  - sudo apt-get install gradle
+install:
+  - pip install tox
+script:
+  - tox -v
+  - gradle check
+after_failure:
+  - cat build/reports/codenarc/main.txt

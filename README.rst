@@ -2,6 +2,9 @@
 Ansible Role: Jenkins CI client
 ===============================
 
+.. image:: https://travis-ci.org/dburm/ansible-role-jenkins.svg?branch=master
+    :target: https://travis-ci.org/dburm/ansible-role-jenkins
+
 Configures Jenkins CI instances
 
 Connection config variables
