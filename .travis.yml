@@ -11,6 +11,4 @@ install:
   - pip install tox
 script:
   - tox -v
-  - gradle check
-after_failure:
-  - cat build/reports/codenarc/main.txt
+  - gradle check --no-daemon
