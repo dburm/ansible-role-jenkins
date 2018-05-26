@@ -2,3 +2,6 @@
 - import_tasks: users.yml
   when: jenkins.users is defined
 
+- import_tasks: credentials.yml
+  when: jenkins.credentials is defined
+
