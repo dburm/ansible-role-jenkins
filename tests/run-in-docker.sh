@@ -2,12 +2,9 @@
 
 GRADLE_VERSION='4.1'
 
-apt-get update;
-apt-get -y install ca-certificates unzip openjdk-8-jdk wget
-
-if [ ! -d "/opt/gradle-$GRADLE_VERSION" ] ; then
-    wget http://downloads.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip /tmp/gradle.zip
-    unzip /tmp/gradle.zip -d /opt/
+if [ ! -d "${HOME}/gradle-${GRADLE_VERSION}" ] ; then
+    wget http://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -O "${HOME}/gradle.zip"
+    unzip "${HOME}/gradle.zip" -d "${HOME}"
 fi
 
-/opt/gradle-$GRADLE_VERSION/bin/gradle -p "$@" --no-daemon check
+"${HOME}/gradle-${GRADLE_VERSION}/bin/gradle" -p "$@" --no-daemon check
