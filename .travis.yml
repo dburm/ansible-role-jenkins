@@ -5,10 +5,7 @@ services: docker
 
 python:
   - "2.7"
-before_install:
-  - sudo apt-get install gradle
 install:
   - pip install tox
 script:
   - tox -v
-  - gradle check --no-daemon
