@@ -17,5 +17,5 @@ repositories {
 
 codenarc {
   configFile = new File('codenarcRules.groovy')
-  reportFormat = 'console'
+  reportFormat = 'text'
 }

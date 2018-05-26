@@ -10,3 +10,5 @@ install:
 script:
   - tox -v
   - gradle --no-daemon check
+after_script:
+  - cat build/reports/codenarc/main.txt
