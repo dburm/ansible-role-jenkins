@@ -78,3 +78,71 @@ Both ommited means to use private key from the Jenkins master ~/.ssh
             content
           passphrase: pass
 
+Agents
+------
+
+Common settings:
+
+.. code-block:: yaml
+
+    jenkins:
+      agents:
+        myAgentName:
+          remote_home: /var/jenkins_home                           # optional; default is /var/lib/jenkins
+          description: 'SSH Agent'                                 # optional
+          executors: 5                                             # optional; default is 1
+          mode: exclusive                                          # optional; defailt is 'normal'
+          retention_strategy: Demand                               # optional; defauil is 'Always'
+          labels:                                                  # optional
+            - my_label1
+            - my_label2
+          env_vars:                                                # optional; default is disabled
+            enabled: true
+            vars:
+              varname: varval
+          job_env:                                                 # optional; default is disabled
+            enabled: false
+            unset_system_env: true                                 # optional; default is false
+            props_file_path: 'some/file'                           # optional
+
+Supported launchers:
+
+- SSH
+
+.. code-block:: yaml
+
+    jenkins:
+      agents:
+        sshAgentName:
+          description: 'SSH Agent'                                 # optional
+          launcher:
+            type: ssh
+            host: 'agent.host.or.ip'
+            credential_id: 'master-cred-id'
+            host_verification: NonVerifyingKeyVerificationStrategy # optional; default is KnownHostsFileKeyVerificationStrategy
+            port: 22444                                            # optional; default is 22
+            java_path: '/path/to/java'                             # optional
+            jvm_opts: 'some java opts'                             # optional
+            start_prefix: 'some prefix'                            # optional
+            start_suffix: 'some suffix'                            # optional
+            timeout: 60                                            # optional
+            retry_count: 5                                         # optional
+            retry_wait: 5                                          # optional
+
+- JNLP
+
+.. code-block:: yaml
+
+    jenkins:
+      agents:
+        sshAgentName:
+          description: 'JNLP Agent'
+          launcher:
+            type: jnlp
+            tunnel: 'mytunnel:50000'                               # optional
+            jvm_opts: 'some java opts'                             # optional
+            disable_workdir: true                                  # optional; default is false
+            custom_workdir: '/home/jen'                            # optional;
+            internal_data_dir: 'temp'                              # optional; default is 'remoting'
+            fail_on_missing_workspace: true                        # optional; default is false
+

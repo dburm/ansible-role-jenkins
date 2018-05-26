@@ -5,3 +5,6 @@
 - import_tasks: credentials.yml
   when: jenkins.credentials is defined
 
+- import_tasks: agents.yml
+  when: jenkins.agents is defined
+
