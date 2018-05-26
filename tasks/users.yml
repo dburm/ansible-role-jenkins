@@ -1,0 +1,12 @@
+---
+- name: Manage Users
+  jenkins_script:
+    script: "{{ lookup('template', 'user.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    validate_certs: no
+  register: state_result
+  with_dict: "{{ jenkins.users }}"
+  changed_when: "'CHANGED' in state_result.output"
+  failed_when: "'FAILED' in state_result.output"

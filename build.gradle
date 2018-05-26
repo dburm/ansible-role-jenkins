@@ -1,0 +1,21 @@
+apply plugin: 'groovy'
+apply plugin: 'codenarc'
+
+sourceSets {
+  main {
+    groovy {
+      srcDir 'templates'
+    }
+  }
+}
+
+compileGroovy.enabled = false
+
+repositories {
+  jcenter()
+}
+
+codenarc {
+  configFile = new File('codenarcRules.groovy')
+  reportFormat = 'text'
+}
