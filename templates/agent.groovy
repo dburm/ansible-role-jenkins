@@ -124,13 +124,13 @@ class Actions {
             instance.setNumExecutors(agentParams.executors)
             changed = true
         }
-        
-        if (!instance.mode.name.equals(agentParams.mode.toUpperCase())) {
+
+        if (instance.mode.name != agentParams.mode.toUpperCase()) {
             instance.setMode(Node.Mode.valueOf(agentParams.mode.toUpperCase()))
             changed = true
         }
-        
-        if (!instance.labelString.equals(agentParams.labels.join(' '))) {
+
+        if (instance.labelString != agentParams.labels.join(' ')) {
             instance.setLabelString(agentParams.labels.join(' '))
             changed = true
         }
