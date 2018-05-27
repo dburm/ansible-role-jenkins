@@ -6,18 +6,21 @@ import hudson.slaves.EnvironmentVariablesNodeProperty
 import hudson.slaves.DumbSlave
 import jenkins.model.Jenkins
 import jenkins.slaves.RemotingWorkDirSettings
+import hudson.util.DescribableList
 
 class Actions {
     Actions(out) {
         this.out = out
+        this.instance = Jenkins.instance
         this.slaves = Jenkins.instance.getNodesObject()
     }
 
     def slaves
     def out
+    def instance
 
     Class<?> loadClass(String clazz) {
-        def classLoader = Jenkins.instance.pluginManager.uberClassLoader
+        def classLoader = instance.pluginManager.uberClassLoader
         try {
             return classLoader.loadClass(clazz)
         } catch (ClassNotFoundException e) {
@@ -31,10 +34,10 @@ class Actions {
         return Jenkins.XSTREAM.toXML(a) == Jenkins.XSTREAM.toXML(b)
     }
 
-    List nodeProperty (params) {
-        List result = []
+    DescribableList createNodeProperties (params) {
+        DescribableList result = []
         if (params.env_vars) {
-            List envVars = params.env_vars.vars.collect { it, val ->
+            List envVars = params.env_vars.collect { it, val ->
                     return new EnvironmentVariablesNodeProperty.Entry(it, val) }
             result.add(new EnvironmentVariablesNodeProperty(envVars))
         }
@@ -75,14 +78,16 @@ class Actions {
             .getDeclaredConstructor().newInstance()
     }
 
-    def defaultAgent = [ present: true,
+    def defaultAgent = [
+        present: true,
         remote_home: '/var/lib/jenkins',
         description: '',
         executors: 1,
         mode: 'normal',
         retention_strategy: 'Always',
         labels: [],
-        launcher: [type: 'jnlp']]
+        launcher: [type: 'jnlp']
+    ]
 
     def defaultLauncher = [
         'ssh': [
@@ -111,10 +116,45 @@ class Actions {
     ]
 
 
-    void setAgent(name, params) {
+    void setMaster(params) {
+        def agentParams = defaultAgent + params
+        Boolean changed = false
+
+        if (instance.numExecutors != agentParams.executors) {
+            instance.setNumExecutors(agentParams.executors)
+            changed = true
+        }
+        
+        if (!instance.mode.name.equals(agentParams.mode.toUpperCase())) {
+            instance.setMode(Node.Mode.valueOf(agentParams.mode.toUpperCase()))
+            changed = true
+        }
+        
+        if (!instance.labelString.equals(agentParams.labels.join(' '))) {
+            instance.setLabelString(agentParams.labels.join(' '))
+            changed = true
+        }
+
+        def newNodeProperties = createNodeProperties(agentParams)
+        def oldNodeProperties = instance.getNodeProperties()
+        if (!compareObjects(oldNodeProperties, newNodeProperties)) {
+            oldNodeProperties.replace(newNodeProperties)
+            changed = true
+        }
+
+        if (changed) {
+            instance.save()
+            out.println 'CHANGED'
+        } else {
+            out.println 'EXISTS'
+        }
+    }
+
+    void setSlave(name, params) {
         String agentName = name
         def agentParams = defaultAgent + params
         agentParams.launcher = defaultLauncher[agentParams.launcher.type] + agentParams.launcher
+        Boolean changed = false
 
         Slave agent = slaves.getNode(agentName)
         if (agentParams.present) {
@@ -127,31 +167,39 @@ class Actions {
                               agentParams.labels.join(' '),
                               launcher(agentParams.launcher),
                               retStrategy(agentParams),
-                              nodeProperty(agentParams))
+                              createNodeProperties(agentParams))
 
-            if (compareObjects(newAgent, agent)) {
-                out.println 'EXISTS'
-            } else {
+            if (!compareObjects(newAgent, agent)) {
                 if (agent) {
                     slaves.replaceNode(agent, newAgent)
-                    out.println 'CHANGED'
+                    changed = true
                 } else {
                     slaves.addNode(newAgent)
-                    out.println 'CHANGED'
+                    changed = true
                 }
-                Jenkins.instance.save()
             }
         } else if (agent) {
             slaves.removeNode(agent)
-            Jenkins.instance.save()
+            changed = true
+        }
+        if (changed) {
+            instance.save()
             out.println 'CHANGED'
         } else {
             out.println 'EXISTS'
+        }
+    }
+
+    void setNode(name, params) {
+        if (name.toLowerCase() == 'master') {
+            setMaster(params)
+        } else {
+            setSlave(name, params)
         }
     }
 }
 
 new groovy.json.JsonSlurperClassic().parseText('''{{ jenkins.agents | to_json}}''')
     .each { name, value ->
-        new Actions(out).setAgent(name, value)
+        new Actions(out).setNode(name, value)
 }
