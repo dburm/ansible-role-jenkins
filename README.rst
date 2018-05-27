@@ -91,22 +91,19 @@ Common settings:
     jenkins:
       agents:
         myAgentName:
-          remote_home: /var/jenkins_home                           # optional; default is /var/lib/jenkins
+          remote_home: /var/jenkins_home                           # optional
           description: 'SSH Agent'                                 # optional
-          executors: 5                                             # optional; default is 1
-          mode: exclusive                                          # optional; defailt is 'normal'
-          retention_strategy: Demand                               # optional; defauil is 'Always'
+          executors: 5                                             # optional
+          mode: exclusive                                          # optional
+          retention_strategy: Demand                               # optional
           labels:                                                  # optional
             - my_label1
             - my_label2
-          env_vars:                                                # optional; default is disabled
-            enabled: true
-            vars:
-              varname: varval
-          job_env:                                                 # optional; default is disabled
-            enabled: false
-            unset_system_env: true                                 # optional; default is false
-            props_file_path: 'some/file'                           # optional
+          env_vars:                                                # optional
+            varname: varval
+          job_env:                                                 # optional
+            unset_system_env: true
+            props_file_path: 'some/file'
 
 Supported launchers:
 
@@ -117,13 +114,14 @@ Supported launchers:
     jenkins:
       agents:
         sshAgentName:
-          description: 'SSH Agent'                                 # optional
+          description: 'SSH Agent'
+          mode: normal
           launcher:
             type: ssh
             host: 'agent.host.or.ip'
             credential_id: 'master-cred-id'
-            host_verification: NonVerifyingKeyVerificationStrategy # optional; default is KnownHostsFileKeyVerificationStrategy
-            port: 22444                                            # optional; default is 22
+            host_verification: NonVerifyingKeyVerificationStrategy # optional
+            port: 22444                                            # optional
             java_path: '/path/to/java'                             # optional
             jvm_opts: 'some java opts'                             # optional
             start_prefix: 'some prefix'                            # optional
@@ -140,12 +138,13 @@ Supported launchers:
       agents:
         sshAgentName:
           description: 'JNLP Agent'
+          retention_strategy: Always
           launcher:
             type: jnlp
             tunnel: 'mytunnel:50000'                               # optional
             jvm_opts: 'some java opts'                             # optional
-            disable_workdir: true                                  # optional; default is false
-            custom_workdir: '/home/jen'                            # optional;
-            internal_data_dir: 'temp'                              # optional; default is 'remoting'
-            fail_on_missing_workspace: true                        # optional; default is false
+            disable_workdir: true                                  # optional
+            custom_workdir: '/home/jen'                            # optional
+            internal_data_dir: 'temp'                              # optional
+            fail_on_missing_workspace: true                        # optional
 

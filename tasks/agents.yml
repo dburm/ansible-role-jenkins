@@ -7,6 +7,5 @@
     password: "{{ jenkins.password }}"
     validate_certs: no
   register: state_result
-  with_dict: "{{ jenkins.agents }}"
   changed_when: "'CHANGED' in state_result.output"
-  failed_when: "'FAILED' in state_result.output"
+

@@ -10,6 +10,8 @@ ruleset {
     NoDef(enabled:false)
     // TBD
     CouldBeElvis(enabled:false)
+    // Not necessarily an issue
+    TrailingComma(enabled:false)
   }
   ruleset('rulesets/design.xml') {
     // Don't need due to code readablilty
@@ -38,10 +40,12 @@ ruleset {
     // SpaceAfterClosingBrace(enabled:false)
     // SpaceBeforeOpeningBrace(enabled:false)
     // Enforce at least one space after map entry colon
-    SpaceAroundMapEntryColon {
-            characterAfterColonRegex = /\s/
-            characterBeforeColonRegex = /./
-    }
+    //SpaceAroundMapEntryColon {
+    //        characterAfterColonRegex = /\s/
+    //        characterBeforeColonRegex = /./
+    //}
+    // Lots of false positive alerts
+    SpaceAroundMapEntryColon(enabled:false)
   }
   ruleset('rulesets/generic.xml')
   ruleset('rulesets/grails.xml')
