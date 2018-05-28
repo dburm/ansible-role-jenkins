@@ -3,12 +3,34 @@ sudo: required
 language: python
 services: docker
 
+addons:
+  sonarcloud:
+    organization: "dburm-github" # the key of the org you chose at step #3
+    token:
+        secure: "UjB9qkQ7AR7jHPuHCpIT5SKF+e4ylzw43GWybYGuFeuitZir+6/5j13+0/J+EYAx6ZyqJFg/nCKoGr3rbQzDdRTjb9fG6B1xeTYt+15fKLujcfiicAhr4J2VYwea/TG+ne+UTVvL7z6opNDLHbSE37upgexX5QjsEEkTaZ5LOby28WmocfF8W1quMq5GXhidiCmyqnTK4IdKqaKCZFtHLzMDw1vG1sJfIkVVwp+yH09pBK/5jel8yra2Ss2mzMvjalIq2pwpeRckpohjvw55FgKkMNnLJ+WasZERwJkMlvagL59b093dC9n0HvqzYQvdSsxAZofKVytXsTvqtSY4fE3UUzM96NCjlouWEQlXLyBSnr+P1thzkpgWz8ohoYXF+rmVHYWTsXkT0LaMyP9MdLWKOl+dZoEJPRYvmxBqDG4NizdwbWtqA9SraIpsC8taTjp+7aVQj8gf3MGuM7bN3Kof6lbicRdpxGfZcl5YiF3AkTn4ZmhiD0NyvVk2onTEWTSdebq9YMREF4L5t+wahiJZ4lE1VPfx6mIVKegRUPEJIfgZ+7rkugcLeqEfX5AlR8Lm0tBSh+HAgM4WlbRMwcjjZhJRqtpIvKUIpRF7aMntd8TBEbbb8VTjHn186rnwcmt3zBf8aOz2GMzOJC90JI+tvw54FfCkLBAPzDKCZMY="
+
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - '$HOME/.sonar/cache'
+    - '$HOME/.gradle/cache'
+
 python:
   - "2.7"
 install:
   - pip install tox
 script:
   - tox -v
+  - sonar-scanner
   - gradle --no-daemon check
 after_script:
   - cat build/reports/codenarc/main.txt
+
+#notifications:
+#  email: false
+#  webhooks:
+#    - secure: ""
+#  on_start: always
+
