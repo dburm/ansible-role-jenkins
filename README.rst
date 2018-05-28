@@ -65,7 +65,8 @@ Supported types:
 - SSH Username with private key
 
 if `key_file_content` is defined, then `key_file` will be ignored.
-Both ommited means to use private key from the Jenkins master ~/.ssh
+Both ommited means to use private key from the Jenkins master ~/.ssh.
+Use `present: false` to remove a credential.
 
 .. code-block:: yaml
 
