@@ -5,7 +5,7 @@
     url: "{{ jenkins.host }}"
     user: "{{ jenkins.user }}"
     password: "{{ jenkins.password }}"
-    validate_certs: no
+    timeout: 600
   register: state_result
   changed_when: "'CHANGED' in state_result.output"
 

@@ -1,0 +1,59 @@
+---
+- name: Wait for instance is up
+  uri:
+    url: "{{ jenkins.host }}/cli"
+    timeout: 120
+    follow_redirects: false
+    status_code: 302,503
+  register: wait_result
+  until: wait_result.status == 302
+  retries: 40
+  delay: 5
+
+- name: Manage Plugins
+  jenkins_script:
+    script: "{{ lookup('template', 'plugins.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: plugin_out
+  changed_when: "'CHANGED' in plugin_out.output"
+
+- name: Prepare instance for restart
+  jenkins_script:
+    script: "{{ lookup('template', 'restart.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 3600
+  register: ifrestart_out
+  changed_when: "'CHANGED' in ifrestart_out.output"
+  when: "'CHANGED' in plugin_out.output"
+
+- name: Restart instance
+  jenkins_script:
+    script: "println 'CHANGED'; jenkins.model.Jenkins.instance.safeRestart()"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+  register: dorestart
+  changed_when: "True"
+  when:
+    - "'CHANGED' in plugin_out.output"
+    - "'CHANGED' in ifrestart_out.output"
+
+- name: Wait for instance is up
+  uri:
+    url: "{{ jenkins.host }}/cli"
+    timeout: 120
+    follow_redirects: false
+    status_code: 302,503
+  register: wait_result
+  until: wait_result.status == 302
+  retries: 40
+  delay: 5
+  when:
+    - "'CHANGED' in plugin_out.output"
+    - dorestart.changed
+
