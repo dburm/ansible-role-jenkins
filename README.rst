@@ -21,6 +21,58 @@ Connection config variables
 Supported sections
 ==================
 
+Plugins
+-------
+
+.. code-block:: yaml
+
+    jenkins:
+      plugin_manager:
+        restart: true
+        update: false #TBD
+        site: "url.to.update.site/updater.json" #TBD
+        proxy:
+          host: "my.proxy.host"
+          port: 8080
+          user_name: "proxy-user"
+          password: "proxy-password"
+          test_url: "url.to.check.if.proxy.works"
+          no_proxy: "host list to bypass proxy"
+        plugins:
+          greenballs:
+            update: true #TBD
+          ldap:
+            enabled: false
+          chucknorris:
+            present: false
+          custom_plugin:
+            from_file: 'URI.to.jpi' # TBD
+
+Parameters:
+
+  - plugin_manager.restart:
+
+    should Jenkins rebooted if plugin list is changed; default: true
+
+  - plugin_manager.update:
+
+    global update parameter for plugins list
+
+  - plugin_manager.site:
+
+    URI to json file of Update Center; default is
+    'https://updates.jenkins-ci.org/update-center.json'
+
+  - plugin_manager.proxy:
+
+    parameters to configure Update Center proxy;
+    default `proxy.preset: false`
+
+  - plugin_manager.plugins.plugin-name
+
+    defaults: `present: true`; `update: false`; `enabled: true`
+
+
 Users
 -----
 
