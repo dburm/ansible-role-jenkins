@@ -4,7 +4,10 @@
 ruleset {
   ruleset('rulesets/basic.xml')
   ruleset('rulesets/braces.xml')
-  ruleset('rulesets/concurrency.xml')
+  ruleset('rulesets/concurrency.xml') {
+    // Not necessarily an issue
+    BusyWait(enabled:false)
+  }
   ruleset('rulesets/convention.xml') {
     // Don't need due to code readablilty
     NoDef(enabled:false)
@@ -86,6 +89,8 @@ ruleset {
   ruleset('rulesets/unnecessary.xml'){
     // Don't need due to code readablilty
     UnnecessaryDefInVariableDeclaration(enabled:false)
+    // Not necessarily an issue
+    UnnecessarySetter(enabled:false)
     // Not necessarily an issue
     UnnecessaryGetter(enabled:false)
     // Not necessarily an issue

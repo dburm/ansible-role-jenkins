@@ -108,7 +108,7 @@ class Actions {
         def plugin = pm.getPlugin(name) ? null : uc.getPlugin(name)
         if (plugin) {
             def installFuture = plugin.deploy()
-            while(!installFuture.isDone()) {
+            while (!installFuture.isDone()) {
                 sleep(3000)
             }
             changed = true

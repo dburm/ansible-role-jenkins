@@ -21,15 +21,15 @@ class Actions {
     void configure(params) {
         def pmParams = defaultManager + params
         // Check if restart required and granted
-        Boolean doRestart = pmParams.restart && (uc.requiresRestart || pm.getPlugins().find{ it.isDeleted() } != null)
+        Boolean doRestart = pmParams.restart && (uc.requiresRestart || pm.getPlugins().find { it.isDeleted() } != null)
         Boolean cancelled = false
 
         if (doRestart) {
             instance.doQuietDown(true, 0) //block, timeout
-            while(!cancelled) {
+            while (!cancelled) {
                 // Check if restart is not cancelled
-                if(instance.isQuietingDown()) {
-                    if(RestartListener.isAllReady()) {
+                if (instance.isQuietingDown()) {
+                    if (RestartListener.isAllReady()) {
                         out.println 'CHANGED'
                         cancelled = true
                     } else {
