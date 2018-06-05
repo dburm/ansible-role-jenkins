@@ -131,7 +131,7 @@ class Actions {
         }
     }
 
-    void installPlugin(name, params) {
+    void installPlugin(name) {
         def plugin = pm.getPlugin(name) ? null : uc.getPlugin(name)
         if (plugin) {
             def installFuture = plugin.deploy()
@@ -142,7 +142,7 @@ class Actions {
         }
     }
 
-    void updatePlugin(name, params) {
+    void updatePlugin(name) {
         out.println "${name} DO UPDATE"
         def plugin = pm.getPlugin(name).getUpdateInfo()
         if (plugin) {

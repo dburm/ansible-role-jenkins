@@ -30,13 +30,13 @@ ruleset {
   }
 //  Raises a lot of "Compilation failed" warnings
 //  ruleset('rulesets/enhanced.xml')
-  ruleset('rulesets/exceptions.xml'){
+  ruleset('rulesets/exceptions.xml') {
     // Not necessarily an issue
     CatchException(enabled:false)
     // Not necessarily an issue
     ThrowRuntimeException(enabled:false)
   }
-  ruleset('rulesets/formatting.xml'){
+  ruleset('rulesets/formatting.xml') {
     // Don't need due to code readablilty
     ConsecutiveBlankLines(enabled:false)
     // TBD: Causes false positive alerts
@@ -52,29 +52,29 @@ ruleset {
   }
   ruleset('rulesets/generic.xml')
   ruleset('rulesets/grails.xml')
-  ruleset('rulesets/groovyism.xml'){
+  ruleset('rulesets/groovyism.xml') {
     // Not necessarily an issue
     GStringExpressionWithinString(enabled:false)
   }
   //ruleset('rulesets/imports.xml')
   ruleset('rulesets/jdbc.xml')
   ruleset('rulesets/junit.xml')
-  ruleset('rulesets/logging.xml'){
+  ruleset('rulesets/logging.xml') {
     // Can't be used in jenklins pipelines
     Println(enabled:false)
   }
-  ruleset('rulesets/naming.xml'){
+  ruleset('rulesets/naming.xml') {
     // Don't need due to code readablilty
     FactoryMethodName(enabled:false)
     // Don't need due to code readablilty
     VariableName(enabled:false)
   }
-  ruleset('rulesets/security.xml'){
+  ruleset('rulesets/security.xml') {
     // Don't need to satisfy the Java Beans specification
     JavaIoPackageAccess(enabled:false)
   }
   ruleset('rulesets/serialization.xml')
-  ruleset('rulesets/size.xml'){
+  ruleset('rulesets/size.xml') {
     // TBD
     AbcMetric(enabled:false)
     // TBD
@@ -86,7 +86,7 @@ ruleset {
     // TBD
     CyclomaticComplexity(enabled:false)
   }
-  ruleset('rulesets/unnecessary.xml'){
+  ruleset('rulesets/unnecessary.xml') {
     // Don't need due to code readablilty
     UnnecessaryDefInVariableDeclaration(enabled:false)
     // Not necessarily an issue
