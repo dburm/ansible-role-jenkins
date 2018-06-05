@@ -28,12 +28,16 @@ class Actions {
         test_url: ''
     ]
 
+    def defaultManager = [update: false]
+
     def defaultPlugin = [
                 present: true,
                 enabled: true,
-                update: false,
                 from_file: '',
     ]
+
+    def pmParams = [:]
+
 
     Boolean changed = false
 
@@ -56,9 +60,7 @@ class Actions {
     }
 
     void configure(params) {
-        //out.println "Restart required: ${uc.requiresRestart}"
-        //def plugin = pm.getPlugin('chucknorris')
-        //if (plugin) { out.println plugin.isDeleted() }
+        pmParams = defaultManager + params
         if (params.proxy) {
             proxy(params.proxy)
         }
@@ -81,9 +83,13 @@ class Actions {
 
     void plugins(params) {
         params.each { name, value ->
-            def pluginParams = defaultPlugin + (value ?: [:])
+            def pluginParams = defaultPlugin + pmParams + (value ?: [:])
             if (pluginParams.present) {
-                installPlugin(name, pluginParams)
+                if (!pm.getPlugin(name)) {
+                    installPlugin(name, pluginParams)
+                } else if (pluginParams.update) {
+                    updatePlugin(name, pluginParams)
+                }
                 setPlugin(name, pluginParams.enabled)
             } else {
                 removePlugin(name)
@@ -115,6 +121,18 @@ class Actions {
         }
     }
 
+    void updatePlugin(name, params) {
+        out.println "${name} DO UPDATE"
+        def plugin = pm.getPlugin(name).getUpdateInfo()
+        if (plugin) {
+            //def installFuture = plugin.deploy()
+            //while (!installFuture.isDone()) {
+            //    sleep(3000)
+            //}
+            changed = true
+        }
+    }
+
     void removePlugin(name) {
         def plugin = pm.getPlugin(name)
         if (plugin) {
@@ -124,6 +142,7 @@ class Actions {
     }
 
     // TODO: Upload plugin with pm.doUploadPlugin(StaplerRequest)
+    // TODO: Plugin pinning
 }
 
 def actions = new Actions(out)

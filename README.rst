@@ -29,7 +29,7 @@ Plugins
     jenkins:
       plugin_manager:
         restart: true
-        update: false #TBD
+        update: false
         site: "url.to.update.site/updater.json" #TBD
         proxy:
           host: "my.proxy.host"
@@ -40,7 +40,7 @@ Plugins
           no_proxy: "host list to bypass proxy"
         plugins:
           greenballs:
-            update: true #TBD
+            update: false
           ldap:
             enabled: false
           chucknorris:
@@ -52,7 +52,7 @@ Parameters:
 
   - plugin_manager.restart:
 
-    should Jenkins rebooted if plugin list is changed; default: true
+    restart Jenkins if plugin list is changed; default: false
 
   - plugin_manager.update:
 
@@ -66,11 +66,13 @@ Parameters:
   - plugin_manager.proxy:
 
     parameters to configure Update Center proxy;
-    default `proxy.preset: false`
+    default `proxy.present: false`
 
   - plugin_manager.plugins.plugin-name
 
-    defaults: `present: true`; `update: false`; `enabled: true`
+    defaults: `present: true`; `enabled: true`
+
+    default `update` parameter inherits from `plugin_manager.update`
 
 
 Users
