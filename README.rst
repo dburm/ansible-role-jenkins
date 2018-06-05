@@ -30,7 +30,7 @@ Plugins
       plugin_manager:
         restart: true
         update: false
-        site: "url.to.update.site/updater.json" #TBD
+        site: "url.to.update.site/updater.json"
         proxy:
           host: "my.proxy.host"
           port: 8080
@@ -41,6 +41,7 @@ Plugins
         plugins:
           greenballs:
             update: false
+            pin: false # TBD
           ldap:
             enabled: false
           chucknorris:

@@ -8,9 +8,6 @@ class Actions {
         this.instance = Jenkins.instance
         this.pm = Jenkins.instance.getPluginManager()
         this.uc = Jenkins.instance.getUpdateCenter()
-        if (this.needToUpdateSites()) {
-            this.uc.updateAllSites()
-        }
     }
 
     def out
@@ -28,7 +25,10 @@ class Actions {
         test_url: ''
     ]
 
-    def defaultManager = [update: false]
+    def defaultManager = [
+        update: false,
+        site: 'https://updates.jenkins.io/update-center.json'
+    ]
 
     def defaultPlugin = [
                 present: true,
@@ -59,11 +59,21 @@ class Actions {
         return (System.currentTimeMillis() - oldestTimeStamp) > maxAgeInSec * 1000
     }
 
+    void updateSites() {
+        if (needToUpdateSites()) {
+            uc.updateAllSites()
+        }
+    }
+
     void configure(params) {
         pmParams = defaultManager + params
         if (params.proxy) {
             proxy(params.proxy)
         }
+        if (params.site) {
+            setUpdateSite(params.site)
+        }
+        updateSites()
         if (params.plugins) {
             plugins(params.plugins)
         }
@@ -77,6 +87,17 @@ class Actions {
 
         if (!compareObjects(newProxy, instance.proxy)) {
             instance.proxy = newProxy
+            changed = true
+        }
+    }
+
+    void setUpdateSite(String url, String id = 'default') {
+        def sites = uc.getSites()
+        def site = uc.getSite(id)
+        def newSite = new UpdateSite(id, url)
+        if (site && !compareObjects(site, newSite)) {
+            sites.remove(site)
+            sites.add(newSite)
             changed = true
         }
     }
