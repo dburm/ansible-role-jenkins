@@ -90,8 +90,6 @@ ruleset {
     // Don't need due to code readablilty
     UnnecessaryDefInVariableDeclaration(enabled:false)
     // Not necessarily an issue
-    UnnecessarySetter(enabled:false)
-    // Not necessarily an issue
     UnnecessaryGetter(enabled:false)
     // Not necessarily an issue
     UnnecessaryReturnKeyword(enabled:false)
