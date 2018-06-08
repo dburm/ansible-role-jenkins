@@ -107,7 +107,7 @@ class Actions {
             def pluginParams = defaultPlugin + pmParams + (value ?: [:])
             if (pluginParams.present) {
                 if (!pm.getPlugin(name)) {
-                    installPlugin(name, pluginParams)
+                    installPlugin(name)
                 } else if (pluginParams.update) {
                     updatePlugin(name, pluginParams)
                 }
