@@ -101,6 +101,7 @@ def actions = new Actions(out)
 actions.configure(users)
 
 if (actions.changed) {
+    actions.instance.save()
     println 'CHANGED'
 } else {
     println 'EXISTS'
