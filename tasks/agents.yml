@@ -1,7 +1,7 @@
 ---
 - name: Manage Agents
   jenkins_script:
-    script: "{{ lookup('template', 'agent.groovy') }}"
+    script: "{{ lookup('template', 'agents.groovy') }}"
     url: "{{ jenkins.host }}"
     user: "{{ jenkins.user }}"
     password: "{{ jenkins.password }}"
