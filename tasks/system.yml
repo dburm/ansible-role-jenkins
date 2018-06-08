@@ -1,0 +1,11 @@
+---
+- name: System configuration
+  jenkins_script:
+    script: "{{ lookup('template', 'system.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: system_state_result
+  changed_when: "'CHANGED' in system_state_result.output"
+

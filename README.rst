@@ -21,6 +21,50 @@ Connection config variables
 Supported sections
 ==================
 
+System configuration
+--------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      system:
+        location: 'http://jenkins.host/'
+        message: ''
+        email: ''
+        usage_stats: false
+        shell: ''
+        quiet_period: 0
+        scm_checkout_retry_count: 0
+        restrict_naming:
+          strategy: default
+          description: ''
+          force_existing: false
+        disabled_monitors:
+          - hudson.PluginManager$PluginCycleDependenciesMonitor
+          - hudson.PluginManager$PluginUpdateMonitor
+          - hudson.PluginWrapper$PluginWrapperAdministrativeMonitor
+          - hudsonHomeIsFull
+          - hudson.diagnosis.NullIdDescriptorMonitor
+          - OldData
+          - hudson.diagnosis.ReverseProxySetupMonitor
+          - hudson.diagnosis.TooManyJobsButNoView
+          - hudson.model.UpdateCenter$CoreUpdateMonitor
+          - hudson.node_monitors.MonitorMarkedNodeOffline
+          - hudson.triggers.SCMTrigger$AdministrativeMonitorImpl
+          - jenkins.CLI
+          - jenkins.diagnosis.HsErrPidList
+          - jenkins.diagnostics.CompletedInitializationMonitor
+          - jenkins.diagnostics.SecurityIsOffMonitor
+          - jenkins.diagnostics.URICheckEncodingMonitor
+          - jenkins.model.DownloadSettings$Warning
+          - jenkins.model.Jenkins$EnforceSlaveAgentPortAdministrativeMonitor
+          - jenkins.security.RekeySecretAdminMonitor
+          - jenkins.security.UpdateSiteWarningsMonitor
+          - jenkins.security.csrf.CSRFAdministrativeMonitor
+          - slaveToMasterAccessControl
+          - jenkins.security.s2m.MasterKillSwitchWarning
+          - jenkins.slaves.DeprecatedAgentProtocolMonitor
+
 Plugins
 -------
 

@@ -2,6 +2,9 @@
 - import_tasks: plugins.yml
   when: jenkins.plugin_manager is defined
 
+- import_tasks: system.yml
+  when: jenkins.system is defined
+
 - import_tasks: users.yml
   when: jenkins.users is defined
 
