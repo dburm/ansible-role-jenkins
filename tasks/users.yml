@@ -1,11 +1,10 @@
 ---
 - name: Manage Users
   jenkins_script:
-    script: "{{ lookup('template', 'user.groovy') }}"
+    script: "{{ lookup('template', 'users.groovy') }}"
     url: "{{ jenkins.host }}"
     user: "{{ jenkins.user }}"
     password: "{{ jenkins.password }}"
     timeout: 600
-  register: state_result
-  with_dict: "{{ jenkins.users }}"
-  changed_when: "'CHANGED' in state_result.output"
+  register: users_state_result
+  changed_when: "'CHANGED' in users_state_result.output"
