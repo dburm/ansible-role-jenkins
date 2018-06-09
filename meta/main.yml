@@ -5,7 +5,9 @@ galaxy_info:
   license: "MIT"
   min_ansible_version: 2.5
   platforms:
-  - name: any
+  - name: GenericLinux
+    versions:
+    - any
   galaxy_tags:
-    - jenkins
-    - cicd
+  - jenkins
+  - cicd
