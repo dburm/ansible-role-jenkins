@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: dburm
+  description: Jenkins CI management
+  license: "MIT"
+  min_ansible_version: 2.5
+  platforms:
+  - name: any
+  galaxy_tags:
+    - jenkins
+    - cicd
