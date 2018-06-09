@@ -204,6 +204,21 @@ Common settings:
             unset_system_env: true
             props_file_path: 'some/file'
 
+Master node settings:
+
+.. code-block:: yaml
+
+    jenkins:
+      agents:
+        master:
+          executors: 5
+          mode: exclusive
+          labels:
+            - my_label1
+            - my_label2
+          env_vars:
+            varname: varval
+
 Supported launchers:
 
 - SSH
