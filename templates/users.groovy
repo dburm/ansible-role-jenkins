@@ -19,6 +19,10 @@ class Actions {
 
     def classLoader = Jenkins.getInstance().pluginManager.uberClassLoader
 
+    Boolean compareObjects( Object a, b) {
+        return Jenkins.XSTREAM.toXML(a) == Jenkins.XSTREAM.toXML(b)
+    }
+
     void configure(params) {
         def userParams
         params.each { name, value ->
@@ -65,17 +69,16 @@ class Actions {
                }
             }
             if (params.email) {
-                def newEmailProperty
-                // Test Mailer plugin installed
+                Class<?> emailPropertyClass
                 try {
-                    newEmailProperty = new hudson.tasks.Mailer.UserProperty(params.email)
-                } catch (Exception e) {
-                    out.println 'FAILED'
-                    newEmailProperty = null
-                }
-                if (newEmailProperty) {
-                    def emailProperty = user.getProperty(hudson.tasks.Mailer.UserProperty)
-                    if ((emailProperty.getAddress() ?: '') != params.email) {
+                    emailPropertyClass = classLoader.loadClass('hudson.tasks.Mailer$UserProperty')
+                } catch (ClassNotFoundException ex) {}
+
+                if (emailPropertyClass) {
+                    def emailConstructor = emailPropertyClass.getDeclaredConstructor(String)
+                    def newEmailProperty = emailConstructor.newInstance(params.email)
+                    def emailProperty = user.getProperty(emailPropertyClass)
+                    if (!compareObjects(emailProperty, newEmailProperty)) {
                         user.addProperty(newEmailProperty)
                         changed = true
                     }
