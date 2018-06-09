@@ -1,4 +1,9 @@
 ---
+- import_tasks: wait.yml
+
+- import_tasks: initial.yml
+  when: jenkins.mounted_homedir is defined
+
 - import_tasks: plugins.yml
   when: jenkins.plugin_manager is defined
 

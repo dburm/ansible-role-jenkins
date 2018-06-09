@@ -1,0 +1,23 @@
+---
+- name: Get system state
+  xml:
+    path: "{{jenkins.mounted_homedir}}/config.xml"
+    xpath: /hudson/installState/isSetupComplete
+    content: text
+  register: xmlresp
+
+- name: Get initial password
+  slurp:
+    src: "{{jenkins.mounted_homedir}}/secrets/initialAdminPassword"
+  register: initial_password_file
+
+- name: Initial management user setup
+  jenkins_script:
+    script: "{{ lookup('template', 'management_user.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: admin
+    password: '{{ initial_password_file["content"] | b64decode | trim }}'
+    timeout: 600
+  register: management_user_state_result
+  changed_when: "'CHANGED' in management_user_state_result.output"
+  when: xmlresp.matches[0].isSetupComplete == "false"

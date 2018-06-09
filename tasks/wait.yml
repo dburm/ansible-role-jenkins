@@ -1,0 +1,11 @@
+---
+- name: Wait for instance is up
+  uri:
+    url: "{{ jenkins.host }}/cli"
+    timeout: 120
+    follow_redirects: false
+    status_code: 302,503
+  register: wait_result
+  until: wait_result.status == 302
+  retries: 40
+  delay: 5
