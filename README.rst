@@ -250,7 +250,7 @@ Supported launchers:
 
     jenkins:
       agents:
-        sshAgentName:
+        lnlpAgentName:
           description: 'JNLP Agent'
           retention_strategy: Always
           launcher:
