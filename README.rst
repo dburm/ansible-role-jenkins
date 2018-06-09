@@ -95,29 +95,29 @@ Plugins
 
 Parameters:
 
-  - plugin_manager.restart:
+- plugin_manager.restart:
 
-    restart Jenkins if plugin list is changed; default: false
+  restart Jenkins if plugin list is changed; default: false
 
-  - plugin_manager.update:
+- plugin_manager.update:
 
-    global update parameter for plugins list
+  global update parameter for plugins list
 
-  - plugin_manager.site:
+- plugin_manager.site:
 
-    URI to json file of Update Center; default is
-    'https://updates.jenkins-ci.org/update-center.json'
+  URI to json file of Update Center; default is
+  'https://updates.jenkins-ci.org/update-center.json'
 
-  - plugin_manager.proxy:
+- plugin_manager.proxy:
 
-    parameters to configure Update Center proxy;
-    default `proxy.present: false`
+  parameters to configure Update Center proxy;
+  default `proxy.present: false`
 
-  - plugin_manager.plugins.plugin-name
+- plugin_manager.plugins.plugin-name
 
-    defaults: `present: true`; `enabled: true`
+  defaults: `present: true`; `enabled: true`
 
-    default `update` parameter inherits from `plugin_manager.update`
+  default `update` parameter inherits from `plugin_manager.update`
 
 
 Users
