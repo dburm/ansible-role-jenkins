@@ -35,6 +35,8 @@ ruleset {
     CatchException(enabled:false)
     // Not necessarily an issue
     ThrowRuntimeException(enabled:false)
+    // Not necessarily an issue
+    ReturnNullFromCatchBlock(enabled:false)
   }
   ruleset('rulesets/formatting.xml') {
     // Don't need due to code readablilty
