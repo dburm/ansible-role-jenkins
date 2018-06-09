@@ -2,7 +2,10 @@
 // Most of all skips should be fixed in the code
 
 ruleset {
-  ruleset('rulesets/basic.xml')
+  ruleset('rulesets/basic.xml') {
+    // Not necessarily an issue
+    EmptyCatchBlock(enabled:false)
+  }
   ruleset('rulesets/braces.xml')
   ruleset('rulesets/concurrency.xml') {
     // Not necessarily an issue

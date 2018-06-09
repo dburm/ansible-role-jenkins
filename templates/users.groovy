@@ -72,7 +72,7 @@ class Actions {
                 Class<?> emailPropertyClass
                 try {
                     emailPropertyClass = classLoader.loadClass('hudson.tasks.Mailer$UserProperty')
-                } catch (ClassNotFoundException ex) {}
+                } catch (ClassNotFoundException ex) { }
 
                 if (emailPropertyClass) {
                     def emailConstructor = emailPropertyClass.getDeclaredConstructor(String)
