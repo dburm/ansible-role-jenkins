@@ -12,3 +12,6 @@ script:
   - gradle --no-daemon check
 after_script:
   - cat build/reports/codenarc/main.txt
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
