@@ -1,0 +1,11 @@
+---
+- name: Security configuration
+  jenkins_script:
+    script: "{{ lookup('template', 'security.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: security_state_result
+  changed_when: "'CHANGED' in security_state_result.output"
+

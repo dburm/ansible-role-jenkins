@@ -10,6 +10,9 @@
 - import_tasks: system.yml
   when: jenkins.system is defined
 
+- import_tasks: security.yml
+  when: jenkins.security is defined
+
 - import_tasks: users.yml
   when: jenkins.users is defined
 
