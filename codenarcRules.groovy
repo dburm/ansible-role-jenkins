@@ -30,6 +30,8 @@ ruleset {
   ruleset('rulesets/dry.xml') {
     // Not necessarily an issue
     DuplicateStringLiteral(enabled:false)
+    // Not necessarily an issue
+    DuplicateNumberLiteral(enabled:false)
   }
 //  Raises a lot of "Compilation failed" warnings
 //  ruleset('rulesets/enhanced.xml')

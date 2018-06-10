@@ -99,7 +99,7 @@ class Actions {
         if (params.enabled) {
             newIssuer = new hudson.security.csrf.DefaultCrumbIssuer(params.proxy_compat ?: false)
         }
-        if (!compareObjects(newIssuer, instance.getCrumbIssuer())){
+        if (!compareObjects(newIssuer, instance.getCrumbIssuer())) {
             instance.setCrumbIssuer(newIssuer)
             changed = true
         }
