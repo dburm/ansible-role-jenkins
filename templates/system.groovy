@@ -18,7 +18,7 @@ class Actions {
     def defaultConfig = [
             message: '',
             usage_stats: true,
-            quietPeriod: 0,
+            quiet_period: 5,
             scm_checkout_retry_count: 0,
             shell: '',
             disabled_monitors: []
