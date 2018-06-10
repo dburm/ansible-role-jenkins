@@ -65,6 +65,44 @@ System configuration
           - jenkins.security.s2m.MasterKillSwitchWarning
           - jenkins.slaves.DeprecatedAgentProtocolMonitor
 
+Security configuration
+----------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      security:
+        disable_remember_me: false
+        access_control:
+          realm: internal | none
+          allow_signup: false
+        auth_strategy:
+          type: allow-all | allow-logged-in
+          allow_anon_read: false
+        markup_formatter:
+          type: safe_html | plain
+          disable_syntax: false
+        agents:
+          port: 50000
+          protocols:
+            - JNLP-connect
+            - JNLP2-connect
+            - JNLP3-connect
+            - JNLP4-connect
+            - Ping
+        csfr_protection:
+            enabled: true
+            proxy_compat: false
+        csp: "sandbox; default-src 'none'; img-src 'self'; style-src 'self';"
+        remoting_cli: false
+        agent_master_security:
+          enabled: true
+          whitelist: |
+            list of commands
+          file_acls: |
+            list of rules
+        sshd_server: -1
+
 Plugins
 -------
 
@@ -261,4 +299,13 @@ Supported launchers:
             custom_workdir: '/home/jen'                            # optional
             internal_data_dir: 'temp'                              # optional
             fail_on_missing_workspace: true                        # optional
+
+Supported plugins
+=================
+
+- `Credentials <https://plugins.jenkins.io/credentials>`_
+- `SSH Credentials <https://plugins.jenkins.io/ssh-credentials>`_
+- `Mailer <https://plugins.jenkins.io/mailer>`_
+- `SSH Slaves <https://plugins.jenkins.io/ssh-slaves>`_
+- `OWASP Markup Formatter <https://plugins.jenkins.io/antisamy-markup-formatter>`_
 
