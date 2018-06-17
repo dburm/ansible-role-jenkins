@@ -35,6 +35,8 @@ System configuration
         shell: ''
         quiet_period: 0
         scm_checkout_retry_count: 0
+        env_vars:
+          varname: varval
         restrict_naming:
           strategy: default
           description: ''

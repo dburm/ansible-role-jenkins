@@ -2,6 +2,7 @@
 
 import jenkins.model.Jenkins
 import jenkins.model.JenkinsLocationConfiguration
+import hudson.slaves.EnvironmentVariablesNodeProperty
 import hudson.tasks.Shell
 
 class Actions {
@@ -31,6 +32,24 @@ class Actions {
 
     Boolean compareObjects( Object a, b) {
         return Jenkins.XSTREAM.toXML(a) == Jenkins.XSTREAM.toXML(b)
+    }
+
+    void setEnvVars(params) {
+        def globalNodeProperties = instance.getGlobalNodeProperties()
+        def envVarsNodeProperty = globalNodeProperties.get(EnvironmentVariablesNodeProperty)
+
+        def newEnvVarsNodeProperty = new EnvironmentVariablesNodeProperty()
+        params.each { key, val ->
+            newEnvVarsNodeProperty.getEnvVars().put(key, val)
+        }
+        if (!compareObjects(newEnvVarsNodeProperty, envVarsNodeProperty)) {
+            if (envVarsNodeProperty) {
+                globalNodeProperties.replace(envVarsNodeProperty, newEnvVarsNodeProperty)
+            } else {
+                globalNodeProperties.add(newEnvVarsNodeProperty)
+            }
+            changed = true
+        }
     }
 
     void configure(systemParams) {
@@ -95,6 +114,7 @@ class Actions {
                 changed = true
             }
         }
+        setEnvVars(params.env_vars)
     }
 }
 
