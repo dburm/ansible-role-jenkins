@@ -1,0 +1,10 @@
+---
+- name: Manage Mailer plugin
+  jenkins_script:
+    script: "{{ lookup('template', 'plugin.mailer.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: mailer_state_result
+  changed_when: "'CHANGED' in mailer_state_result.output"

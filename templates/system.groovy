@@ -14,7 +14,7 @@ class Actions {
     def instance = Jenkins.instance
     def config = JenkinsLocationConfiguration.get()
     def shell = new Shell().getDescriptor()
-    Boolean changed
+    Boolean changed = false
 
     def defaultConfig = [
             message: '',
@@ -30,62 +30,8 @@ class Actions {
             force_existing: false,
         ]
 
-    def defaultMailer = [
-            host: null,
-            port: null,
-            suffix: null,
-            reply_to: null,
-            ssl: false,
-            charset: 'UTF-8',
-            username: null,
-            password: null
-        ]
-
     Boolean compareObjects( Object a, b) {
         return Jenkins.XSTREAM.toXML(a) == Jenkins.XSTREAM.toXML(b)
-    }
-
-    void setMailer(mailerParams) {
-       def mailer = instance.getDescriptor('hudson.tasks.Mailer')
-       if (mailer) {
-           def params = defaultMailer + mailerParams
-           if (mailer.smtpHost != params.host) {
-               mailer.smtpHost = params.host
-               changed = true
-           }
-           def port = null
-           if (params.port) {
-               port = params.port.toString()
-           }
-           if (mailer.smtpPort != port) {
-               mailer.smtpPort = port
-               changed = true
-           }
-           if (mailer.defaultSuffix != params.suffix) {
-               mailer.defaultSuffix = params.suffix
-               changed = true
-           }
-           if (mailer.charset != params.charset) {
-               mailer.charset = params.charset
-               changed = true
-           }
-           if (mailer.useSsl != params.ssl) {
-               mailer.useSsl = params.ssl
-               changed = true
-           }
-           if (mailer.smtpAuthUsername != params.username) {
-               mailer.smtpAuthUsername = params.username
-               changed = true
-           }
-           if (mailer.smtpAuthPassword != params.password) {
-               mailer.smtpAuthPassword = hudson.util.Secret.fromString(params.password)
-               changed = true
-           }
-           if (mailer.replyToAddress != params.reply_to) {
-               mailer.replyToAddress = params.reply_to
-               changed = true
-           }
-       }
     }
 
     void setEnvVars(params) {
@@ -169,9 +115,6 @@ class Actions {
             }
         }
         setEnvVars(params.env_vars)
-        if (params.mailer) {
-            setMailer(params.mailer)
-        }
     }
 }
 

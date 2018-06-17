@@ -22,3 +22,6 @@
 - import_tasks: agents.yml
   when: jenkins.agents is defined
 
+- import_tasks: mailer.yml
+  when: jenkins.mailer is defined
+

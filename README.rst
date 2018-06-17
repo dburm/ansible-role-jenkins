@@ -37,15 +37,6 @@ System configuration
         scm_checkout_retry_count: 0
         env_vars:
           varname: varval
-        mailer:
-          host: 'mail.server'
-          port: 25
-          suffix: ''
-          reply_to: ''
-          ssl: false
-          charset: UTF-8
-          username: 'smtpUserName'
-          password: 'smtpPassword'
         restrict_naming:
           strategy: default
           description: ''
@@ -310,6 +301,23 @@ Supported launchers:
             custom_workdir: '/home/jen'                            # optional
             internal_data_dir: 'temp'                              # optional
             fail_on_missing_workspace: true                        # optional
+
+Mailer plugin configuration
+---------------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      mailer:
+        host: 'mail.server'
+        port: 25
+        suffix: ''
+        reply_to: ''
+        ssl: false
+        charset: UTF-8
+        username: 'smtpUserName'
+        password: 'smtpPassword'
+
 
 Supported plugins
 =================
