@@ -63,10 +63,11 @@ class Actions {
                authStrategy = new hudson.security.FullControlOnceLoggedInAuthorizationStrategy()
                authStrategy.setAllowAnonymousRead(params.allow_anon_read == null ? false : params.allow_anon_read)
                break
-           default:
+           case 'allow-all':
                authStrategy = hudson.security.AuthorizationStrategy.UNSECURED
+               break
         }
-        if (!compareObjects(authStrategy, instance.getAuthorizationStrategy())) {
+        if (authStrategy && !compareObjects(authStrategy, instance.getAuthorizationStrategy())) {
             instance.setAuthorizationStrategy(authStrategy)
             changed = true
         }

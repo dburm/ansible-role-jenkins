@@ -28,3 +28,10 @@
 - import_tasks: script_approval.yml
   when: jenkins.script_approval is defined
 
+- import_tasks: matrix.yml
+  when:
+    - jenkins.security is defined
+    - jenkins.security.auth_strategy is defined
+    - jenkins.security.auth_strategy.permissions is defined
+    - jenkins.security.auth_strategy.type == 'matrix' or jenkins.security.auth_strategy.type == 'project_matrix'
+

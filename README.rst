@@ -332,6 +332,22 @@ Script Security plugin configuration
           - method java.util.Map size
           - method groovy.lang.GString getBytes
 
+Matrix Authorization Strategy plugin configuration
+--------------------------------------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      security:
+        auth_strategy:
+          type: matrix | project_matrix
+          permissions:
+            anonymous:
+              - Overall/Read
+            authenticated:
+              - Overall/Administer
+            admin:
+              - hudson.model.Hudson.ADMINISTER
 
 Supported plugins
 =================
@@ -342,4 +358,5 @@ Supported plugins
 - `Mailer <https://plugins.jenkins.io/mailer>`_
 - `SSH Slaves <https://plugins.jenkins.io/ssh-slaves>`_
 - `OWASP Markup Formatter <https://plugins.jenkins.io/antisamy-markup-formatter>`_
+- `Matrix Authorization Strategy <https://plugins.jenkins.io/matrix-auth>`_
 

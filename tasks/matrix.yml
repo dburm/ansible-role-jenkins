@@ -1,0 +1,10 @@
+---
+- name: Manage Matrix Authorization Strategy plugin
+  jenkins_script:
+    script: "{{ lookup('template', 'plugin.matrix.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: matrix_state_result
+  changed_when: "'CHANGED' in matrix_state_result.output"
