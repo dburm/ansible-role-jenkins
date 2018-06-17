@@ -37,6 +37,15 @@ System configuration
         scm_checkout_retry_count: 0
         env_vars:
           varname: varval
+        mailer:
+          host: 'mail.server'
+          port: 25
+          suffix: ''
+          reply_to: ''
+          ssl: false
+          charset: UTF-8
+          username: 'smtpUserName'
+          password: 'smtpPassword'
         restrict_naming:
           strategy: default
           description: ''
