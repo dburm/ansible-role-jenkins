@@ -318,10 +318,25 @@ Mailer plugin configuration
         username: 'smtpUserName'
         password: 'smtpPassword'
 
+Script Security plugin configuration
+------------------------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      script_approval:
+        approved:
+          - field java.util.ArrayList size
+        acl_approved:
+          - method java.lang.Class getMethods
+          - method java.util.Map size
+          - method groovy.lang.GString getBytes
+
 
 Supported plugins
 =================
 
+- `Script Security <https://plugins.jenkins.io/script-security>`_
 - `Credentials <https://plugins.jenkins.io/credentials>`_
 - `SSH Credentials <https://plugins.jenkins.io/ssh-credentials>`_
 - `Mailer <https://plugins.jenkins.io/mailer>`_

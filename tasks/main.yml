@@ -25,3 +25,6 @@
 - import_tasks: mailer.yml
   when: jenkins.mailer is defined
 
+- import_tasks: script_approval.yml
+  when: jenkins.script_approval is defined
+
