@@ -1,10 +1,19 @@
 ---
-- name: Get system state
+- name: Get system state old
   xml:
     path: "{{jenkins.mounted_homedir}}/config.xml"
     xpath: /hudson/installState/isSetupComplete
     content: text
-  register: xmlresp
+  register: xmlresp_old
+  ignore_errors: yes
+
+- name: Get system state new
+  xml:
+    path: "{{jenkins.mounted_homedir}}/config.xml"
+    xpath: /hudson/installStateName
+    content: text
+  register: xmlresp_new
+  ignore_errors: yes
 
 - name: Get initial password
   slurp:
@@ -20,4 +29,5 @@
     timeout: 600
   register: management_user_state_result
   changed_when: "'CHANGED' in management_user_state_result.output"
-  when: xmlresp.matches[0].isSetupComplete == "false"
+  when: (xmlresp_old.matches is defined and xmlresp_old.matches[0].isSetupComplete == "false") or
+        (xmlresp_new.matches is defined and xmlresp_new.matches[0].installStateName == 'NEW')
