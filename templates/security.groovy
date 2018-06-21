@@ -47,10 +47,11 @@ class Actions {
             case 'internal':
                 realm = new hudson.security.HudsonPrivateSecurityRealm(params.allow_signup ?: false)
                 break
-            default:
+            case 'none':
                 realm = hudson.security.SecurityRealm.NO_AUTHENTICATION
+                break
         }
-        if (!compareObjects(realm, instance.getSecurityRealm())) {
+        if (realm && !compareObjects(realm, instance.getSecurityRealm())) {
             instance.setSecurityRealm(realm)
             changed = true
         }

@@ -100,6 +100,9 @@ ruleset {
     UnnecessaryGetter(enabled:false)
     // Not necessarily an issue
     UnnecessaryReturnKeyword(enabled:false)
+    // Not necessarily an issue
+    UnnecessaryObjectReferences(enabled: false)
+
   }
   ruleset('rulesets/unused.xml')
 }

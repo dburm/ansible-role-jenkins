@@ -1,0 +1,10 @@
+---
+- name: LDAP plugin
+  jenkins_script:
+    script: "{{ lookup('template', 'plugin.ldap.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: ldap_state_result
+  changed_when: "'CHANGED' in ldap_state_result.output"

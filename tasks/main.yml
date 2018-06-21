@@ -35,3 +35,10 @@
     - jenkins.security.auth_strategy.permissions is defined
     - jenkins.security.auth_strategy.type == 'matrix' or jenkins.security.auth_strategy.type == 'project_matrix'
 
+- import_tasks: ldap.yml
+  when:
+    - jenkins.security is defined
+    - jenkins.security.access_control is defined
+    - jenkins.security.access_control.realm is defined
+    - jenkins.security.access_control.realm == 'ldap'
+

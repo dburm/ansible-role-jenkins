@@ -349,9 +349,46 @@ Matrix Authorization Strategy plugin configuration
             admin:
               - hudson.model.Hudson.ADMINISTER
 
+LDAP plugin configuration
+-------------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      security:
+        access_control:
+          realm: ldap
+          ldap:
+            login_case_sensitivity: sensitive | insensitive | sensitive_email
+            group_case_sensitivity: sensitive | insensitive | sensitive_email
+            disable_email_resolver: false
+            disable_role_backward_compatibility: true
+            enable_cache: true
+            cache_size: 20
+            cache_ttl: 30
+            servers:
+              - server: 'ldap://ldap.domain.name'
+                root_dn: 'dc=domain,dc=name'
+                allow_blank_root_dn: false
+                user_search_base: ou=people
+                user_search_filter: 'uid={0}'
+                group_search_base: ou=groups
+                group_search_filter: 'gid={0}'
+                group_membership: user | group
+                group_membership_param: memberOf
+                manager_dn: 'cn=manager'
+                manager_password: secret-password
+                displayname_attribute: displayname
+                email_attribute: mail
+                ignore_if_unavailable: false
+                environment_properties:
+                    name1: value1
+
+
 Supported plugins
 =================
 
+- `LDAP <https://plugins.jenkins.io/ldap>`_
 - `Script Security <https://plugins.jenkins.io/script-security>`_
 - `Credentials <https://plugins.jenkins.io/credentials>`_
 - `SSH Credentials <https://plugins.jenkins.io/ssh-credentials>`_
