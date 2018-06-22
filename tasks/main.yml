@@ -42,3 +42,7 @@
     - jenkins.security.access_control.realm is defined
     - jenkins.security.access_control.realm == 'ldap'
 
+- import_tasks: theme.yml
+  when:
+    - jenkins.theme is defined
+

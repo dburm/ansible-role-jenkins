@@ -1,0 +1,10 @@
+---
+- name: Simple Theme plugin
+  jenkins_script:
+    script: "{{ lookup('template', 'plugin.simple-theme.groovy') }}"
+    url: "{{ jenkins.host }}"
+    user: "{{ jenkins.user }}"
+    password: "{{ jenkins.password }}"
+    timeout: 600
+  register: theme_state_result
+  changed_when: "'CHANGED' in theme_state_result.output"

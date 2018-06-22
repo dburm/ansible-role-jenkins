@@ -384,10 +384,23 @@ LDAP plugin configuration
                 environment_properties:
                     name1: value1
 
+Simple Theme plugin configuration
+---------------------------------
+
+.. code-block:: yaml
+
+    jenkins:
+      theme:
+        css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
+        extra_css: ''
+        js_url: ''
+        favicon_url: ''
+
 
 Supported plugins
 =================
 
+- `Simple Theme <https://plugins.jenkins.io/simple-theme-plugin>`_
 - `LDAP <https://plugins.jenkins.io/ldap>`_
 - `Script Security <https://plugins.jenkins.io/script-security>`_
 - `Credentials <https://plugins.jenkins.io/credentials>`_
